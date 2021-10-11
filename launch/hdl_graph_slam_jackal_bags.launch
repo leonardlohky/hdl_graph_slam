@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- robot namespace -->
+  <arg name="robot_1" default="multijackal_01" />
+  <arg name="robot_2" default="multijackal_02" />
+
+  <!-- ROS parameters -->
+  <rosparam>use_sim_time: true</rosparam>
+
+  <!-- Bag file and player for Jackals-->
+  <arg name="bag_file1" value="$(env HOME)/.segmap/rrt/nuc_01/2021-09-30-16-30-52.bag"/>
+  <arg name="bag_file2" value="$(env HOME)/.segmap/rrt/nuc_02/2021-09-30-16-30-55.bag"/>
+  <arg name="bag_file_server" value="$(env HOME)/.segmap/rrt/server_bags/overall_uwb_2.bag"/>
+  <node name="player_server" pkg="rosbag" type="play" output="screen" args=" --clock  $(arg bag_file_server)">
+    <!-- remap topics with robot namespace -->
+    <remap from="/multijackal_01/tf" to="/tf" />
+    <remap from="/multijackal_01/tf_static" to="/tf_static" />
+    <remap from="/multijackal_02/tf" to="/tf" />
+    <remap from="/multijackal_02/tf_static" to="/tf_static" />
+    <remap from="/multijackal_03/tf" to="/tf" />
+    <remap from="/multijackal_03/tf_static" to="/tf_static" />
+  </node>
+
+</launch>
