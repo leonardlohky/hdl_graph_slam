@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+
+<!-- ROS parameters -->
+<rosparam>use_sim_time: true</rosparam>
+
+<!-- 3D octomap mapper node-->
+<node pkg="octomap_world" type="octomap_manager" name="octomap_manager_server" output="screen">       
+  <remap from="/tf" to="/merged/tf" />
+  <remap from="/tf_static" to="/merged/tf_static" />
+
+  <param name="tf_frame"  type="string" value="map"/>  
+  <remap from="pointcloud"     to="/map_merge/map"/>      
+  <param name="map_publish_frequency"  type="double" value="5.0"/>     
+  <param name="resolution"  type="double" value="0.1"/>   
+  <param name="sensor_max_range" type="double" value="999.0"/>   
+  <param name="ignore_timestamp_mismatch" type="bool" value="true"/>         
+</node> 
+
+</launch>
+	

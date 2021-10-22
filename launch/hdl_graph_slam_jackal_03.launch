@@ -2,10 +2,10 @@
 <launch>
 
   <!-- robot namespace -->
-  <arg name="robot_ns" default="multijackal_01" />
+  <arg name="robot_ns" default="multijackal_03" />
 
   <!-- arguments -->
-  <arg name="nodelet_manager" default="velodyne_nodelet_manager_01" />
+  <arg name="nodelet_manager" default="velodyne_nodelet_manager_03" />
   <arg name="enable_floor_detection" default="false" />
   <arg name="enable_gps" default="false" />
   <arg name="enable_imu_acc" default="false" />
@@ -26,28 +26,22 @@
   <arg name="robot_odom_frame_id" default="robot_odom" />
 
   <!-- transformation between lidar and base_link -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="lidar2base_publisher_01" args="0 0 0 0 0 0 /$(arg robot_ns)/base_link /$(arg robot_ns)/velodyne 10">
+  <!-- <node pkg="tf" type="static_transform_publisher" name="lidar2base_publisher_03" args="0 0 0 0 0 0 /$(arg robot_ns)/base_link /$(arg robot_ns)/velodyne 10">
     <remap from="/tf" to="$(arg tf_topic)" />
   </node> -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_ns)_tf_broadcaster_01"  args="0 0 0 0 0 0 /map /$(arg robot_ns)/map 10">
-    <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="$(arg robot_ns)_map_to_$(arg robot_ns)_odom_broadcaster_01"  args="0 0 0 0 0 0 /$(arg robot_ns)/map /$(arg robot_ns)/odom 10">
-    <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="$(arg robot_ns)_odom_to_$(arg robot_ns)_base_link_broadcaster_01"  args="0 0 0 0 0 0 /$(arg robot_ns)/odom /$(arg robot_ns)/base_link 10">
+  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_ns)_tf_broadcaster_03"  args="0 0 0 0 0 0 /map /$(arg robot_ns)/map 10">
     <remap from="/tf" to="$(arg tf_topic)" />
   </node> -->
 
   <!-- in case you use velodyne_driver, comment out the following line -->
-  <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager)" args="manager" output="screen">
+  <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager)" respawn="true" args="manager" output="screen">
     <!-- remap topics with robot namespace -->
     <remap from="/tf" to="$(arg tf_topic)" />
     <remap from="/tf_static" to="$(arg tf_static_topic)" />
   </node>
 
   <!-- prefiltering_nodelet -->
-  <node pkg="nodelet" type="nodelet" name="prefiltering_nodelet_01" args="load hdl_graph_slam/PrefilteringNodelet $(arg nodelet_manager)">
+  <node pkg="nodelet" type="nodelet" name="prefiltering_nodelet_03" args="load hdl_graph_slam/PrefilteringNodelet $(arg nodelet_manager)">
     <!-- remap topics with robot namespace -->
     <remap from="/velodyne_points" to="$(arg points_topic)" />
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
@@ -69,7 +63,7 @@
   </node>
 
   <!-- scan_matching_odometry_nodelet -->
-  <!-- <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_01" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
+  <!-- <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_03" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/odom" to="/$(arg robot_ns)/odom" />
     <remap from="/scan_matching_odometry/read_until" to="/$(arg robot_ns)/scan_matching_odometry/read_until" />
@@ -89,7 +83,6 @@
     <param name="max_acceptable_angle" value="1.0" />
     <param name="downsample_method" value="NONE" />
     <param name="downsample_resolution" value="0.1" />
-
     <param name="registration_method" value="FAST_GICP" />
     <param name="reg_num_threads" value="0" />
     <param name="reg_transformation_epsilon" value="0.01"/>
@@ -103,7 +96,7 @@
   </node> -->
 
   <!-- floor_detection_nodelet -->
-  <node pkg="nodelet" type="nodelet" name="floor_detection_nodelet_01" args="load hdl_graph_slam/FloorDetectionNodelet $(arg nodelet_manager)" if="$(arg enable_floor_detection)">
+  <node pkg="nodelet" type="nodelet" name="floor_detection_nodelet_03" args="load hdl_graph_slam/FloorDetectionNodelet $(arg nodelet_manager)" if="$(arg enable_floor_detection)">
     <!-- remap topics with robot namespace -->
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/floor_detection/floor_coeffs" to="/$(arg robot_ns)/floor_detection/floor_coeffs" />
@@ -118,7 +111,7 @@
   </node>
 
   <!-- hdl_graph_slam_nodelet -->
-  <node pkg="nodelet" type="nodelet" name="hdl_graph_slam_nodelet_01" args="load hdl_graph_slam/HdlGraphSlamNodelet $(arg nodelet_manager)">
+  <node pkg="nodelet" type="nodelet" name="hdl_graph_slam_nodelet_03" args="load hdl_graph_slam/HdlGraphSlamNodelet $(arg nodelet_manager)">
     <!-- remap topics with robot namespace -->
     <remap from="/odom" to="/$(arg robot_ns)/odometry/tracking_filtered" />
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
@@ -127,8 +120,8 @@
     <remap from="/hdl_graph_slam/markers" to="/$(arg robot_ns)/hdl_graph_slam/markers" />
     <remap from="/hdl_graph_slam/odom2pub" to="/$(arg robot_ns)/hdl_graph_slam/odom2pub" />
     <remap from="/hdl_graph_slam/read_until" to="/$(arg robot_ns)/hdl_graph_slam/read_until" />
-    <remap from="/hdl_graph_slam/dump" to="/hdl_graph_slam_nodelet_01/dump" />
-    <remap from="/hdl_graph_slam/save_map" to="/hdl_graph_slam_nodelet_01/save_map" />
+    <remap from="/hdl_graph_slam/dump" to="/hdl_graph_slam_nodelet_03/dump" />
+    <remap from="/hdl_graph_slam/save_map" to="/hdl_graph_slam_nodelet_03/save_map" />
 
     <param name="points_topic" value="$(arg points_topic)" />
     <!-- frame settings -->
@@ -201,7 +194,7 @@
     <param name="map_cloud_resolution" value="0.05" />
   </node>
 
-  <node pkg="hdl_graph_slam" type="map2odom_publisher.py" name="map2odom_publisher_01">
+  <node pkg="hdl_graph_slam" type="map2odom_publisher.py" name="map2odom_publisher_03">
     <remap from="/tf" to="$(arg tf_topic)" />
     <remap from="/tf_static" to="$(arg tf_static_topic)" />
     <remap from="/hdl_graph_slam/odom2pub" to="/$(arg robot_ns)/hdl_graph_slam/odom2pub" />

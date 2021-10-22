@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <launch>
+
+<!-- ROS parameters -->
+<rosparam>use_sim_time: true</rosparam>
+
 <group ns="map_merge">
-  <node pkg="map_merge_3d" type="map_merge_node" respawn="false" name="map_merge_3d" output="screen">
+  <node pkg="map_merge_3d" type="map_merge_node" respawn="true" name="map_merge_3d" output="screen">
+    <!-- remap tf topics to merged ones -->
+    <remap from="/tf" to="/merged/tf" />
+    <remap from="/tf_static" to="/merged/tf_static" />
+
     <param name="robot_map_topic" value="map_points"/>
     <param name="robot_namespace" value="multijackal_0"/>
     <param name="merged_map_topic" value="map"/>
-    <param name="world_frame" value="world"/>
+    <param name="world_frame" value="map"/>
     <param name="compositing_rate" value="0.3"/>
     <param name="discovery_rate" value="0.05"/>
-    <param name="estimation_rate" value="0.01"/>
-    <param name="publish_tf" value="true"/>
+    <param name="estimation_rate" value="0.03"/>
+    <param name="publish_tf" value="false"/>
     <!-- and all the other map merging parameters -->
+    <param name="resolution" value="0.1"/>
+    <param name="outliers_min_neighbours" value="100"/>
+    <param name="max_iterations" value="500"/>
+    <param name="refine_transform" value="1"/>
+    <param name="transform_epsilon" value="0.01"/>
+    <param name="normal_radius" value="0.3"/>
+    <param name="descriptor_type" value="SHOT" /> <!--PFH, PFHRGB, FPFH, RSD, SHOT, SC3D -->
+    <param name="descriptor_radius" value="0.8" />
+    <param name="matching_k" value="5" />
+    <param name="confidence_threshold" value="0.0"/>
+    <param name="output_resolution" value="0.05"/>
+    <param name="estimation_method" value="MATCHING"/> <!-- MATCHING, SAC_IA-->
+    <param name="keypoint_type" value="HARRIS" /> <!-- HARRIS, SIFT-->
+    <param name="keypoint_threshold" value="0.005" />
   </node>
 </group>
-
-<!-- 3D octomap mapper node-->
-<node pkg="octomap_world" type="octomap_manager" name="octomap_manager_server" output="screen">         
-  <param name="tf_frame"  type="string" value="world"/>  
-  <remap from="pointcloud"     to="/map_merge/map"/>      
-  <param name="map_publish_frequency"  type="double" value="5.0"/>     
-  <param name="resolution"  type="double" value="0.1"/>   
-  <param name="sensor_max_range" type="double" value="20.0"/>   
-  <param name="ignore_timestamp_mismatch" type="bool" value="true"/>         
-</node> 
 
 </launch>
 	

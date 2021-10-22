@@ -107,9 +107,9 @@ public:
     points_topic = private_nh.param<std::string>("points_topic", "/velodyne_points");
 
     // subscribers
-    odom_sub.reset(new message_filters::Subscriber<nav_msgs::Odometry>(mt_nh, "/odom", 256));
-    cloud_sub.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(mt_nh, "/filtered_points", 32));
-    sync.reset(new message_filters::Synchronizer<ApproxSyncPolicy>(ApproxSyncPolicy(32), *odom_sub, *cloud_sub));
+    odom_sub.reset(new message_filters::Subscriber<nav_msgs::Odometry>(mt_nh, "/odom", 32));
+    cloud_sub.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(mt_nh, "/filtered_points", 1024));
+    sync.reset(new message_filters::Synchronizer<ApproxSyncPolicy>(ApproxSyncPolicy(1024), *odom_sub, *cloud_sub));
     sync->registerCallback(boost::bind(&HdlGraphSlamNodelet::cloud_callback, this, _1, _2));
     imu_sub = nh.subscribe("/gpsimu_driver/imu_data", 1024, &HdlGraphSlamNodelet::imu_callback, this);
     floor_sub = nh.subscribe("/floor_detection/floor_coeffs", 1024, &HdlGraphSlamNodelet::floor_coeffs_callback, this);
@@ -145,7 +145,6 @@ private:
   void cloud_callback(const nav_msgs::OdometryConstPtr& odom_msg, const sensor_msgs::PointCloud2::ConstPtr& cloud_msg) {
     const ros::Time& stamp = cloud_msg->header.stamp;
     Eigen::Isometry3d odom = odom2isometry(odom_msg);
-
     pcl::PointCloud<PointT>::Ptr cloud(new pcl::PointCloud<PointT>());
     pcl::fromROSMsg(*cloud_msg, *cloud);
     if(base_frame_id.empty()) {
@@ -558,6 +557,9 @@ private:
 
     // loop detection
     std::vector<Loop::Ptr> loops = loop_detector->detect(keyframes, new_keyframes, *graph_slam);
+    if(loops.size() > 1) {
+      std::cout << "Loop closure detected for " << odom_frame_id << std::endl;
+    }
     for(const auto& loop : loops) {
       Eigen::Isometry3d relpose(loop->relative_pose.cast<double>());
       Eigen::MatrixXd information_matrix = inf_calclator->calc_information_matrix(loop->key1->cloud, loop->key2->cloud, relpose);

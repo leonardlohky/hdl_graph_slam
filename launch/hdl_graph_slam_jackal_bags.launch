@@ -4,22 +4,37 @@
   <!-- robot namespace -->
   <arg name="robot_1" default="multijackal_01" />
   <arg name="robot_2" default="multijackal_02" />
+  <arg name="robot_3" default="multijackal_03" />
+
+  <arg name="tf_topic" default="/merged/tf" />
+  <arg name="tf_static_topic" default="/merged/tf_static" />
 
   <!-- ROS parameters -->
   <rosparam>use_sim_time: true</rosparam>
 
+  <!-- world to map tf publishers -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_ns)_tf_broadcaster_01"  args="0 0 0 0 0 0 /map /$(arg robot_1)/map 10">
+    <remap from="/tf" to="$(arg tf_topic)" />
+  </node>
+  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_ns)_tf_broadcaster_02"  args="0 0 0 0 0 0 /map /$(arg robot_2)/map 10">
+    <remap from="/tf" to="$(arg tf_topic)" />
+  </node>
+  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_ns)_tf_broadcaster_03"  args="0 0 0 0 0 0 /map /$(arg robot_3)/map 10">
+    <remap from="/tf" to="$(arg tf_topic)" />
+  </node> -->
+
   <!-- Bag file and player for Jackals-->
   <arg name="bag_file1" value="$(env HOME)/.segmap/rrt/nuc_01/2021-09-30-16-30-52.bag"/>
   <arg name="bag_file2" value="$(env HOME)/.segmap/rrt/nuc_02/2021-09-30-16-30-55.bag"/>
-  <arg name="bag_file_server" value="$(env HOME)/.segmap/rrt/server_bags/overall_uwb_2.bag"/>
-  <node name="player_server" pkg="rosbag" type="play" output="screen" args=" --clock  $(arg bag_file_server)">
+  <arg name="bag_file3" value="$(env HOME)/.segmap/rrt/nuc_03/2021-09-30-16-30-57.bag"/>
+  <arg name="bag_file_server" value="$(env HOME)/.segmap/rrt/server_bags/2021-10-19-16-45-28.bag"/>
+  <node name="player_server" pkg="rosbag" type="play" output="screen" args=" --clock  $(arg bag_file_server)"/>
+
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find hdl_graph_slam)/rviz/hdl_graph_slam.rviz">
     <!-- remap topics with robot namespace -->
-    <remap from="/multijackal_01/tf" to="/tf" />
-    <remap from="/multijackal_01/tf_static" to="/tf_static" />
-    <remap from="/multijackal_02/tf" to="/tf" />
-    <remap from="/multijackal_02/tf_static" to="/tf_static" />
-    <remap from="/multijackal_03/tf" to="/tf" />
-    <remap from="/multijackal_03/tf_static" to="/tf_static" />
+    <remap from="/tf" to="$(arg tf_topic)" />
+    <remap from="/tf_static" to="$(arg tf_static_topic)" />
   </node>
+
 
 </launch>
