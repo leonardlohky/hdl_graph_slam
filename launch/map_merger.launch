@@ -24,9 +24,10 @@
     <param name="outliers_min_neighbours" value="100"/>
     <param name="max_iterations" value="500"/>
     <param name="refine_transform" value="1"/>
-    <param name="transform_epsilon" value="0.01"/>
+    <param name="refine_method" value="NDT"/>
+    <param name="transform_epsilon" value="0.001"/>
     <param name="normal_radius" value="0.3"/>
-    <param name="descriptor_type" value="SHOT" /> <!--PFH, PFHRGB, FPFH, RSD, SHOT, SC3D -->
+    <param name="descriptor_type" value="FPFH" /> <!--PFH, PFHRGB, FPFH, RSD, SHOT, SC3D -->
     <param name="descriptor_radius" value="0.8" />
     <param name="matching_k" value="5" />
     <param name="confidence_threshold" value="0.0"/>
@@ -34,8 +35,23 @@
     <param name="estimation_method" value="MATCHING"/> <!-- MATCHING, SAC_IA-->
     <param name="keypoint_type" value="HARRIS" /> <!-- HARRIS, SIFT-->
     <param name="keypoint_threshold" value="0.005" />
+    <param name="ndt_step_size" value="0.1" />
+    <param name="ndt_resolution" value="1.5" />
   </node>
 </group>
+
+<!-- 3D octomap mapper node-->
+<node pkg="octomap_world" type="octomap_manager" name="octomap_manager_server" output="screen">       
+  <remap from="/tf" to="/merged/tf" />
+  <remap from="/tf_static" to="/merged/tf_static" />
+
+  <param name="tf_frame"  type="string" value="map"/>  
+  <remap from="pointcloud"     to="/map_merge/map"/>      
+  <param name="map_publish_frequency"  type="double" value="5.0"/>     
+  <param name="resolution"  type="double" value="0.1"/>   
+  <param name="sensor_max_range" type="double" value="999.0"/>   
+  <param name="ignore_timestamp_mismatch" type="bool" value="true"/>         
+</node> 
 
 </launch>
 	
