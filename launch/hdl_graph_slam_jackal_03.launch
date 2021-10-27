@@ -26,15 +26,15 @@
   <arg name="robot_odom_frame_id" default="robot_odom" />
 
   <!-- transformation between lidar and base_link -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="lidar2base_publisher_03" args="0 0 0 0 0 0 /$(arg robot_ns)/base_link /$(arg robot_ns)/velodyne 10">
+  <node pkg="tf" type="static_transform_publisher" name="lidar2base_publisher_03" args="0 0 0 0 0 0 /$(arg robot_ns)/base_link /$(arg robot_ns)/velodyne 10">
     <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
+  </node>
   <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_ns)_tf_broadcaster_03"  args="0 0 0 0 0 0 /map /$(arg robot_ns)/map 10">
     <remap from="/tf" to="$(arg tf_topic)" />
   </node> -->
 
   <!-- in case you use velodyne_driver, comment out the following line -->
-  <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager)" respawn="true" args="manager" output="screen">
+  <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager)" args="manager" output="screen">
     <!-- remap topics with robot namespace -->
     <remap from="/tf" to="$(arg tf_topic)" />
     <remap from="/tf_static" to="$(arg tf_static_topic)" />
