@@ -156,7 +156,7 @@
     <param name="min_edge_interval" value="5.0" />
     <param name="fitness_score_thresh" value="0.5" />
     <!-- scan matching params -->
-    <param name="registration_method" value="FAST_GICP" />
+    <param name="registration_method" value="FAST_VGICP" />
     <param name="reg_num_threads" value="0" />
     <param name="reg_transformation_epsilon" value="0.01"/>
     <param name="reg_maximum_iterations" value="64"/>
