@@ -15,8 +15,8 @@
   <!-- <arg name="points_topic" default="/velodyne_points" /> -->
   <arg name="map_frame_id" default="$(arg robot_ns)/map" />
   <arg name="lidar_odom_frame_id" default="$(arg robot_ns)/odom" />
-  <arg name="tf_topic" default="/merged/tf" />
-  <arg name="tf_static_topic" default="/merged/tf_static" />
+  <arg name="tf_topic" default="/tf" />
+  <arg name="tf_static_topic" default="/tf_static" />
 
   <!-- ROS parameters -->
   <rosparam>use_sim_time: true</rosparam>
@@ -63,7 +63,7 @@
   </node>
 
   <!-- scan_matching_odometry_nodelet -->
-  <!-- <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_03" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
+  <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_03" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/odom" to="/$(arg robot_ns)/odom" />
     <remap from="/scan_matching_odometry/read_until" to="/$(arg robot_ns)/scan_matching_odometry/read_until" />
@@ -93,7 +93,7 @@
     <param name="reg_correspondence_randomness" value="20"/>
     <param name="reg_resolution" value="1.0" />
     <param name="reg_nn_search_method" value="DIRECT7" />
-  </node> -->
+  </node>
 
   <!-- floor_detection_nodelet -->
   <node pkg="nodelet" type="nodelet" name="floor_detection_nodelet_03" args="load hdl_graph_slam/FloorDetectionNodelet $(arg nodelet_manager)" if="$(arg enable_floor_detection)">
@@ -113,7 +113,7 @@
   <!-- hdl_graph_slam_nodelet -->
   <node pkg="nodelet" type="nodelet" name="hdl_graph_slam_nodelet_03" args="load hdl_graph_slam/HdlGraphSlamNodelet $(arg nodelet_manager)">
     <!-- remap topics with robot namespace -->
-    <remap from="/odom" to="/$(arg robot_ns)/odometry/tracking_filtered" />
+    <remap from="/odom" to="/$(arg robot_ns)/odom" />
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/floor_detection/floor_coeffs" to="/$(arg robot_ns)/floor_detection/floor_coeffs" />
     <remap from="/hdl_graph_slam/map_points" to="/$(arg robot_ns)/hdl_graph_slam/map_points" />

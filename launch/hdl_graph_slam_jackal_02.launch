@@ -26,9 +26,9 @@
   <arg name="robot_odom_frame_id" default="robot_odom" />
 
   <!-- transformation between lidar and base_link -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="lidar2base_publisher_02" args="0 0 0 0 0 0 /$(arg robot_ns)/base_link /$(arg robot_ns)/velodyne 10">
+  <node pkg="tf" type="static_transform_publisher" name="lidar2base_publisher_02" args="0 0 0 0 0 0 /$(arg robot_ns)/base_link /$(arg robot_ns)/velodyne 10">
     <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
+  </node>
   <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_ns)_tf_broadcaster_02"  args="0 0 0 0 0 0 /map /$(arg robot_ns)/map 10">
     <remap from="/tf" to="$(arg tf_topic)" />
   </node> -->
@@ -64,7 +64,6 @@
 
   <!-- scan_matching_odometry_nodelet -->
   <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_02" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
-    <!-- remap topics with robot namespace -->
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/odom" to="/$(arg robot_ns)/odom" />
     <remap from="/scan_matching_odometry/read_until" to="/$(arg robot_ns)/scan_matching_odometry/read_until" />
@@ -84,7 +83,6 @@
     <param name="max_acceptable_angle" value="1.0" />
     <param name="downsample_method" value="NONE" />
     <param name="downsample_resolution" value="0.1" />
-    <!-- ICP, GICP, NDT, GICP_OMP, NDT_OMP, FAST_GICP(recommended), or FAST_VGICP -->
     <param name="registration_method" value="FAST_GICP" />
     <param name="reg_num_threads" value="0" />
     <param name="reg_transformation_epsilon" value="0.01"/>
@@ -122,6 +120,8 @@
     <remap from="/hdl_graph_slam/markers" to="/$(arg robot_ns)/hdl_graph_slam/markers" />
     <remap from="/hdl_graph_slam/odom2pub" to="/$(arg robot_ns)/hdl_graph_slam/odom2pub" />
     <remap from="/hdl_graph_slam/read_until" to="/$(arg robot_ns)/hdl_graph_slam/read_until" />
+    <remap from="/hdl_graph_slam/dump" to="/hdl_graph_slam_nodelet_02/dump" />
+    <remap from="/hdl_graph_slam/save_map" to="/hdl_graph_slam_nodelet_02/save_map" />
 
     <param name="points_topic" value="$(arg points_topic)" />
     <!-- frame settings -->
@@ -149,7 +149,7 @@
     <param name="min_edge_interval" value="5.0" />
     <param name="fitness_score_thresh" value="0.5" />
     <!-- scan matching params -->
-    <param name="registration_method" value="FAST_GICP" />
+    <param name="registration_method" value="FAST_VGICP" />
     <param name="reg_num_threads" value="0" />
     <param name="reg_transformation_epsilon" value="0.01"/>
     <param name="reg_maximum_iterations" value="64"/>
