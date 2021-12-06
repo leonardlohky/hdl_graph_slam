@@ -50,7 +50,7 @@
     <!-- distance filter -->
     <param name="use_distance_filter" value="true" />
     <param name="distance_near_thresh" value="0.1" />
-    <param name="distance_far_thresh" value="100.0" />
+    <param name="distance_far_thresh" value="30.0" />
     <!-- NONE, VOXELGRID, or APPROX_VOXELGRID -->
     <param name="downsample_method" value="VOXELGRID" />
     <param name="downsample_resolution" value="0.1" />

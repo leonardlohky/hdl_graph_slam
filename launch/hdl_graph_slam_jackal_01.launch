@@ -26,16 +26,10 @@
   <arg name="robot_odom_frame_id" default="robot_odom" />
 
   <!-- transformation between lidar and base_link -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="lidar2base_publisher_01" args="0 0 0 0 0 0 /$(arg robot_ns)/base_link /$(arg robot_ns)/velodyne 10">
+  <node pkg="tf" type="static_transform_publisher" name="lidar2base_publisher_01" args="0 0 0 0 0 0 /$(arg robot_ns)/base_link /$(arg robot_ns)/velodyne 10">
     <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
+  </node>
   <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_ns)_tf_broadcaster_01"  args="0 0 0 0 0 0 /map /$(arg robot_ns)/map 10">
-    <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="$(arg robot_ns)_map_to_$(arg robot_ns)_odom_broadcaster_01"  args="0 0 0 0 0 0 /$(arg robot_ns)/map /$(arg robot_ns)/odom 10">
-    <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="$(arg robot_ns)_odom_to_$(arg robot_ns)_base_link_broadcaster_01"  args="0 0 0 0 0 0 /$(arg robot_ns)/odom /$(arg robot_ns)/base_link 10">
     <remap from="/tf" to="$(arg tf_topic)" />
   </node> -->
 
@@ -56,7 +50,7 @@
     <!-- distance filter -->
     <param name="use_distance_filter" value="true" />
     <param name="distance_near_thresh" value="0.1" />
-    <param name="distance_far_thresh" value="100.0" />
+    <param name="distance_far_thresh" value="30.0" />
     <!-- NONE, VOXELGRID, or APPROX_VOXELGRID -->
     <param name="downsample_method" value="VOXELGRID" />
     <param name="downsample_resolution" value="0.1" />
@@ -69,7 +63,7 @@
   </node>
 
   <!-- scan_matching_odometry_nodelet -->
-  <!-- <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_01" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
+  <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_01" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/odom" to="/$(arg robot_ns)/odom" />
     <remap from="/scan_matching_odometry/read_until" to="/$(arg robot_ns)/scan_matching_odometry/read_until" />
@@ -89,7 +83,6 @@
     <param name="max_acceptable_angle" value="1.0" />
     <param name="downsample_method" value="NONE" />
     <param name="downsample_resolution" value="0.1" />
-
     <param name="registration_method" value="FAST_GICP" />
     <param name="reg_num_threads" value="0" />
     <param name="reg_transformation_epsilon" value="0.01"/>
@@ -100,7 +93,7 @@
     <param name="reg_correspondence_randomness" value="20"/>
     <param name="reg_resolution" value="1.0" />
     <param name="reg_nn_search_method" value="DIRECT7" />
-  </node> -->
+  </node>
 
   <!-- floor_detection_nodelet -->
   <node pkg="nodelet" type="nodelet" name="floor_detection_nodelet_01" args="load hdl_graph_slam/FloorDetectionNodelet $(arg nodelet_manager)" if="$(arg enable_floor_detection)">
@@ -120,7 +113,7 @@
   <!-- hdl_graph_slam_nodelet -->
   <node pkg="nodelet" type="nodelet" name="hdl_graph_slam_nodelet_01" args="load hdl_graph_slam/HdlGraphSlamNodelet $(arg nodelet_manager)">
     <!-- remap topics with robot namespace -->
-    <remap from="/odom" to="/$(arg robot_ns)/odometry/tracking_filtered" />
+    <remap from="/odom" to="/$(arg robot_ns)/odom" />
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/floor_detection/floor_coeffs" to="/$(arg robot_ns)/floor_detection/floor_coeffs" />
     <remap from="/hdl_graph_slam/map_points" to="/$(arg robot_ns)/hdl_graph_slam/map_points" />
