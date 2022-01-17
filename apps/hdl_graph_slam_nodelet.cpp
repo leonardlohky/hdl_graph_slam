@@ -36,6 +36,7 @@
 
 #include <hdl_graph_slam/SaveMap.h>
 #include <hdl_graph_slam/DumpGraph.h>
+#include <hdl_graph_slam/PublishMapToDummy.h>
 
 #include <nodelet/nodelet.h>
 #include <pluginlib/class_list_macros.h>
@@ -124,10 +125,13 @@ public:
     markers_pub = mt_nh.advertise<visualization_msgs::MarkerArray>("/hdl_graph_slam/markers", 16);
     odom2map_pub = mt_nh.advertise<geometry_msgs::TransformStamped>("/hdl_graph_slam/odom2pub", 16);
     map_points_pub = mt_nh.advertise<sensor_msgs::PointCloud2>("/hdl_graph_slam/map_points", 1, true);
+    map_points_dummy_pub = mt_nh.advertise<sensor_msgs::PointCloud2>("/hdl_graph_slam/map_points_dummy", 1, true);
     read_until_pub = mt_nh.advertise<std_msgs::Header>("/hdl_graph_slam/read_until", 32);
+    publish_to_dummy = false;
 
     dump_service_server = mt_nh.advertiseService("/hdl_graph_slam/dump", &HdlGraphSlamNodelet::dump_service, this);
     save_map_service_server = mt_nh.advertiseService("/hdl_graph_slam/save_map", &HdlGraphSlamNodelet::save_map_service, this);
+    publish_map_to_dummy_service_server = mt_nh.advertiseService("/hdl_graph_slam/publish_map_to_dummy", &HdlGraphSlamNodelet::publish_map_to_dummy_service, this);
 
     graph_updated = false;
     double graph_update_interval = private_nh.param<double>("graph_update_interval", 3.0);
@@ -529,7 +533,12 @@ private:
     sensor_msgs::PointCloud2Ptr cloud_msg(new sensor_msgs::PointCloud2());
     pcl::toROSMsg(*cloud, *cloud_msg);
 
-    map_points_pub.publish(cloud_msg);
+    if(!publish_to_dummy) {
+      map_points_pub.publish(cloud_msg);
+    } else{
+      map_points_dummy_pub.publish(cloud_msg);
+    }
+
   }
 
   /**
@@ -891,6 +900,27 @@ private:
     return true;
   }
 
+  /**
+   * @brief re-direct publishing of map to dummy topic
+   * @param req
+   * @param res
+   * @return
+   */
+  bool publish_map_to_dummy_service(hdl_graph_slam::PublishMapToDummyRequest& req, hdl_graph_slam::PublishMapToDummyResponse& res) {
+    std::vector<KeyFrameSnapshot::Ptr> snapshot;
+
+    if(req.utm) {
+      publish_to_dummy = true;
+      res.success = true;
+      return true;
+    } else {
+      publish_to_dummy = false;
+      res.success = true;
+      return true;
+    }
+
+  }
+
 private:
   // ROS
   ros::NodeHandle nh;
@@ -922,11 +952,14 @@ private:
   std::string points_topic;
   ros::Publisher read_until_pub;
   ros::Publisher map_points_pub;
+  ros::Publisher map_points_dummy_pub;
+  bool publish_to_dummy;
 
   tf::TransformListener tf_listener;
 
   ros::ServiceServer dump_service_server;
   ros::ServiceServer save_map_service_server;
+  ros::ServiceServer publish_map_to_dummy_service_server;
 
   // keyframe queue
   std::string base_frame_id;

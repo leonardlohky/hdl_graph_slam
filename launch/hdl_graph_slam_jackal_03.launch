@@ -122,6 +122,7 @@
     <remap from="/hdl_graph_slam/read_until" to="/$(arg robot_ns)/hdl_graph_slam/read_until" />
     <remap from="/hdl_graph_slam/dump" to="/hdl_graph_slam_nodelet_03/dump" />
     <remap from="/hdl_graph_slam/save_map" to="/hdl_graph_slam_nodelet_03/save_map" />
+    <remap from="/hdl_graph_slam/publish_map_to_dummy" to="/hdl_graph_slam_nodelet_03/publish_map_to_dummy" />
 
     <param name="points_topic" value="$(arg points_topic)" />
     <!-- frame settings -->

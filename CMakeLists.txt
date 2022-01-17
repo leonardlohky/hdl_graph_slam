@@ -62,6 +62,7 @@ add_message_files(FILES
 add_service_files(FILES
   SaveMap.srv
   DumpGraph.srv
+  PublishMapToDummy.srv
 )
 
 generate_messages(DEPENDENCIES std_msgs geometry_msgs)

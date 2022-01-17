@@ -34,10 +34,6 @@
     <remap from="/tf" to="$(arg tf_topic)" />
   </node>
 
-  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_ns)_tf_broadcaster_03"  args="0 0 0 0 0 0 /map /$(arg robot_3)/map 10">
-    <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
-
   <!-- Bag file and player for Jackals-->
   <arg name="bag_file1" value="$(env HOME)/.segmap/rrt/nuc_01/2021-10-28-16-45-57.bag"/>
   <arg name="bag_file2" value="$(env HOME)/.segmap/rrt/nuc_02/2021-10-28-16-45-58.bag"/>
@@ -47,7 +43,6 @@
   <node name="player1" pkg="rosbag" type="play" output="screen" args=" --clock  $(arg bag_file_server)"/>
 
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find hdl_graph_slam)/rviz/hdl_graph_slam.rviz">
-    <!-- remap topics with robot namespace -->
     <remap from="/tf" to="$(arg tf_topic)" />
     <remap from="/tf_static" to="$(arg tf_static_topic)" />
   </node>

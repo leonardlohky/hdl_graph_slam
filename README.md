@@ -150,6 +150,16 @@ rosservice call /hdl_graph_slam_nodelet_03/save_map "resolution: 0.1
 destination: '/home/leonard/catkin_ws/src/hdl_graph_slam/data/new_jackal_03.pcd'"
 ```
 
+To re-direct the publishing of map to a dummy topic (to simulate network dropping issue):
+```bash
+# to enable publishing to dummy topic
+rosservice call /hdl_graph_slam_nodelet_XX/publish_map_to_dummy 1
+
+# to enable publishing to original map topic
+rosservice call /hdl_graph_slam_nodelet_XX/publish_map_to_dummy 0
+
+```
+
 ## Example2 (Outdoor)
 
 Bag file (recorded in an outdoor environment):
