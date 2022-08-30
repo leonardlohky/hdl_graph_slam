@@ -103,8 +103,8 @@
 
     <param name="points_topic" value="$(arg points_topic)" />
     <param name="tilt_deg" value="0.0" />
-    <param name="sensor_height" value="2.0" />
-    <param name="height_clip_range" value="1.0" />
+    <param name="sensor_height" value="0.5" />
+    <param name="height_clip_range" value="0.25" />
     <param name="floor_pts_thresh" value="512" />
     <param name="use_normal_filtering" value="true" />
     <param name="normal_filter_thresh" value="20.0" />

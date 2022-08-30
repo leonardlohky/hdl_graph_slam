@@ -103,8 +103,8 @@
 
     <param name="points_topic" value="$(arg points_topic)" />
     <param name="tilt_deg" value="0.0" />
-    <param name="sensor_height" value="2.0" />
-    <param name="height_clip_range" value="1.0" />
+    <param name="sensor_height" value="0.76" />
+    <param name="height_clip_range" value="0.38" />
     <param name="floor_pts_thresh" value="512" />
     <param name="use_normal_filtering" value="true" />
     <param name="normal_filter_thresh" value="20.0" />
@@ -120,10 +120,12 @@
     <remap from="/hdl_graph_slam/markers" to="/$(arg robot_ns)/hdl_graph_slam/markers" />
     <remap from="/hdl_graph_slam/odom2pub" to="/$(arg robot_ns)/hdl_graph_slam/odom2pub" />
     <remap from="/hdl_graph_slam/read_until" to="/$(arg robot_ns)/hdl_graph_slam/read_until" />
+    <remap from="/hdl_graph_slam/keyframes" to="/$(arg robot_ns)/hdl_graph_slam/keyframes" />
     <remap from="/hdl_graph_slam/dump" to="/hdl_graph_slam_nodelet_03/dump" />
     <remap from="/hdl_graph_slam/save_map" to="/hdl_graph_slam_nodelet_03/save_map" />
     <remap from="/hdl_graph_slam/publish_map_to_dummy" to="/hdl_graph_slam_nodelet_03/publish_map_to_dummy" />
 
+    <param name="robot_ns" value="$(arg robot_ns)" />
     <param name="points_topic" value="$(arg points_topic)" />
     <!-- frame settings -->
     <param name="map_frame_id" value="$(arg map_frame_id)" />

@@ -32,7 +32,17 @@
 #include <sensor_msgs/PointCloud2.h>
 #include <geographic_msgs/GeoPointStamped.h>
 #include <visualization_msgs/MarkerArray.h>
+
 #include <hdl_graph_slam/FloorCoeffs.h>
+#include <hdl_graph_slam/KF.h>
+#include <hdl_graph_slam/Keyframes_Graph.h>
+#include <hdl_graph_slam/Vertex_SE3.h>
+#include <hdl_graph_slam/Vertex_Plane.h>
+#include <hdl_graph_slam/Vertex_PointXYZ.h>
+#include <hdl_graph_slam/Edge_SE3.h>
+#include <hdl_graph_slam/Edge_SE3_Plane.h>
+#include <hdl_graph_slam/Edge_SE3_PointXYZ.h>
+#include <hdl_graph_slam/g2oGraph.h>
 
 #include <hdl_graph_slam/SaveMap.h>
 #include <hdl_graph_slam/DumpGraph.h>
@@ -76,6 +86,7 @@ public:
     private_nh = getPrivateNodeHandle();
 
     // init parameters
+    robot_ns = private_nh.param<std::string>("robot_ns", "");
     map_frame_id = private_nh.param<std::string>("map_frame_id", "map");
     odom_frame_id = private_nh.param<std::string>("odom_frame_id", "odom");
     map_cloud_resolution = private_nh.param<double>("map_cloud_resolution", 0.05);
@@ -126,8 +137,10 @@ public:
     odom2map_pub = mt_nh.advertise<geometry_msgs::TransformStamped>("/hdl_graph_slam/odom2pub", 16);
     map_points_pub = mt_nh.advertise<sensor_msgs::PointCloud2>("/hdl_graph_slam/map_points", 1, true);
     map_points_dummy_pub = mt_nh.advertise<sensor_msgs::PointCloud2>("/hdl_graph_slam/map_points_dummy", 1, true);
+    keyframes_pub = mt_nh.advertise<Keyframes_Graph>("/hdl_graph_slam/keyframes", 1, true);
     read_until_pub = mt_nh.advertise<std_msgs::Header>("/hdl_graph_slam/read_until", 32);
     publish_to_dummy = false;
+    publish_keyframes_graph = true;
 
     dump_service_server = mt_nh.advertiseService("/hdl_graph_slam/dump", &HdlGraphSlamNodelet::dump_service, this);
     save_map_service_server = mt_nh.advertiseService("/hdl_graph_slam/save_map", &HdlGraphSlamNodelet::save_map_service, this);
@@ -605,6 +618,10 @@ private:
     keyframes_snapshot_mutex.unlock();
     graph_updated = true;
 
+    std::cout << "HDL Graph SLAM map2odom transform:" << std::endl;
+    std::cout << trans.matrix() << std::endl;
+    std::cout << "\n" << std::endl;
+    
     if(odom2map_pub.getNumSubscribers()) {
       geometry_msgs::TransformStamped ts = matrix2transform(keyframe->stamp, trans.matrix().cast<float>(), map_frame_id, odom_frame_id);
       odom2map_pub.publish(ts);
@@ -614,6 +631,54 @@ private:
       auto markers = create_marker_array(ros::Time::now());
       markers_pub.publish(markers);
     }
+
+    if(publish_keyframes_graph) {
+      Keyframes_Graph keyframes_graph_msg;
+      auto kf_graph_msg = create_keyframes_graph_msg(keyframes);
+
+      keyframes_pub.publish(kf_graph_msg);
+    }
+
+  }
+
+  /**
+   * @brief this methods publishes the stored keyframes and pose graph
+   * @return the Keyframe_Graph msg
+   */
+  Keyframes_Graph create_keyframes_graph_msg(std::vector<KeyFrame::Ptr> keyframes) {
+    Keyframes_Graph keyframes_graph_msg;
+
+    // add the keyframes and corresponding poses first
+    for(const auto& keyframe : keyframes) {
+      pcl::PointCloud<PointT>::ConstPtr kf_cloud(new pcl::PointCloud<PointT>());
+      kf_cloud = keyframe->cloud; // extract the point cloud
+
+      KF kf; // new keyframe
+
+      std_msgs::Header kf_header;
+      kf_header.frame_id = odom_frame_id;
+      kf_header.stamp = ros::Time::now() + ros::Duration(30, 0);
+
+      kf.header = kf_header;
+
+      kf.robot_ns = robot_ns;
+      kf.pose = isometry2pose(keyframe->odom);
+      kf.accum_distance = keyframe->accum_distance;
+      
+      sensor_msgs::PointCloud2Ptr cloud_msg(new sensor_msgs::PointCloud2());
+      pcl::toROSMsg(*kf_cloud, *cloud_msg);
+      kf.cloud = *cloud_msg;
+
+      Eigen::Vector4d coeffs = *(keyframe->floor_coeffs);
+      kf.floor_coeffs[0] = coeffs(0,1);
+      kf.floor_coeffs[1] = coeffs(1,1);
+      kf.floor_coeffs[2] = coeffs(2,1);
+      kf.floor_coeffs[3] = coeffs(3,1);
+
+      keyframes_graph_msg.keyframes.push_back(kf); // add keyframe
+    }
+
+    return keyframes_graph_msg;
   }
 
   /**
@@ -907,8 +972,7 @@ private:
    * @return
    */
   bool publish_map_to_dummy_service(hdl_graph_slam::PublishMapToDummyRequest& req, hdl_graph_slam::PublishMapToDummyResponse& res) {
-    std::vector<KeyFrameSnapshot::Ptr> snapshot;
-
+    
     if(req.utm) {
       publish_to_dummy = true;
       res.success = true;
@@ -942,6 +1006,7 @@ private:
 
   ros::Publisher markers_pub;
 
+  std::string robot_ns;
   std::string map_frame_id;
   std::string odom_frame_id;
 
@@ -953,7 +1018,9 @@ private:
   ros::Publisher read_until_pub;
   ros::Publisher map_points_pub;
   ros::Publisher map_points_dummy_pub;
+  ros::Publisher keyframes_pub;
   bool publish_to_dummy;
+  bool publish_keyframes_graph;
 
   tf::TransformListener tf_listener;
 
