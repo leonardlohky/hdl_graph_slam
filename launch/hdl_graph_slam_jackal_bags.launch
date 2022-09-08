@@ -35,21 +35,21 @@
     <remap from="/tf" to="$(arg tf_topic)" />
   </node> -->
 
-  <node pkg="tf" type="static_transform_publisher" name="map_to_$(arg hololens_1)_map_tf_broadcaster_03"  args="0 0 0 0 0 0 /map /$(arg hololens_1)/map 10">
+  <!-- <node pkg="tf" type="static_transform_publisher" name="map_to_$(arg hololens_1)_map_tf_broadcaster_03"  args="0 0 0 0 0 0 /map /$(arg hololens_1)/map 10">
     <remap from="/tf" to="$(arg tf_topic)" />
-  </node>
-  <node pkg="tf" type="static_transform_publisher" name="$(arg hololens_1)_map_to_$(arg hololens_1)_odom_broadcaster_03"  args="0 0 0 0 0 0 /$(arg hololens_1)/map /$(arg hololens_1)/odom 10">
+  </node> -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="$(arg hololens_1)_map_to_$(arg hololens_1)_odom_broadcaster_03"  args="0 0 0 0 0 0 /$(arg hololens_1)/map /$(arg hololens_1)/odom 10">
     <remap from="/tf" to="$(arg tf_topic)" />
-  </node>
+  </node> -->
 
   <!-- Bag file and player for Jackals-->
   <arg name="bag_file1" value="$(env HOME)/bags/dog_project/dog/Vision60-2022-05-19-17-22-45.bag"/>
   <!-- <arg name="bag_file2" value="$(env HOME)/.segmap/rrt/nuc_02/2021-10-28-16-45-58.bag"/> -->
   <!-- <arg name="bag_file3" value="$(env HOME)/.segmap/rrt/nuc_03/2021-09-30-16-30-57.bag"/> -->
-  <arg name="bag_file_hololens" value="$(env HOME)/bags/dog_project/hololens/2022-08-12-18-01-53.bag"/>
+  <arg name="bag_file_hololens" value="$(env HOME)/bags/dog_project/hololens/20220902_hlpcl_long_fast.bag"/>
   <arg name="bag_file_server" value="$(env HOME)/bags/dog_project/merged/2022-05-19_dog_jackal_merged_tfProc.bag"/>
 
-  <node name="player1" pkg="rosbag" type="play" output="screen" args=" --clock  $(arg bag_file_server)"/>
+  <node name="player1" pkg="rosbag" type="play" output="screen" args=" --clock  $(arg bag_file_hololens)"/>
 
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find hdl_graph_slam)/rviz/hdl_graph_slam.rviz">
     <remap from="/tf" to="$(arg tf_topic)" />

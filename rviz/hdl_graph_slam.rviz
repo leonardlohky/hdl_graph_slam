@@ -6,13 +6,11 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /TF1
         - "/jackal_01: odom_t2651/Shape1"
         - "/jackal_01: PathMarkers1/Namespaces1"
         - "/jackal_03: PathMarkers1/Namespaces1"
-        - /PointCloud26
-        - /MarkerArray1
         - /MarkerArray1/Namespaces1
+        - "/hololens_01: MapPoints1"
       Splitter Ratio: 0.5
     Tree Height: 681
   - Class: rviz/Selection
@@ -33,7 +31,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: "jackal_03: VelodynePoints"
+    SyncSource: PointCloud2
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -64,9 +62,9 @@ Visualization Manager:
       Frame Timeout: 50
       Frames:
         All Enabled: false
-        asa_anchor_frame_corrected:
+        HololensRM_pcl:
           Value: true
-        hololens:
+        hololens_01/base_link:
           Value: true
         hololens_01/map:
           Value: false
@@ -75,72 +73,6 @@ Visualization Manager:
         keyframe:
           Value: false
         map:
-          Value: true
-        multijackal_01/base_footprint:
-          Value: false
-        multijackal_01/base_link:
-          Value: true
-        multijackal_01/d435i_2_link:
-          Value: false
-        multijackal_01/d435i_link:
-          Value: false
-        multijackal_01/map:
-          Value: false
-        multijackal_01/odom:
-          Value: false
-        multijackal_01/pointcloud_to_laser_frame:
-          Value: false
-        multijackal_01/t265_link:
-          Value: false
-        multijackal_01/t265_odom_frame:
-          Value: false
-        multijackal_01/t265_pose_frame:
-          Value: false
-        multijackal_01/velodyne:
-          Value: false
-        multijackal_03/base_link:
-          Value: true
-        multijackal_03/camera_color_frame:
-          Value: false
-        multijackal_03/camera_color_optical_frame:
-          Value: false
-        multijackal_03/camera_depth_frame:
-          Value: false
-        multijackal_03/camera_depth_optical_frame:
-          Value: false
-        multijackal_03/camera_link:
-          Value: false
-        multijackal_03/chassis_link:
-          Value: false
-        multijackal_03/front_left_wheel_link:
-          Value: false
-        multijackal_03/front_mount:
-          Value: false
-        multijackal_03/front_right_wheel_link:
-          Value: false
-        multijackal_03/map:
-          Value: false
-        multijackal_03/odom:
-          Value: false
-        multijackal_03/rear_left_wheel_link:
-          Value: false
-        multijackal_03/rear_right_wheel_link:
-          Value: false
-        multijackal_03/tracking_camera_accel_frame:
-          Value: false
-        multijackal_03/tracking_camera_accel_optical_frame:
-          Value: false
-        multijackal_03/tracking_camera_gyro_frame:
-          Value: false
-        multijackal_03/tracking_camera_gyro_optical_frame:
-          Value: false
-        multijackal_03/tracking_camera_link:
-          Value: false
-        multijackal_03/tracking_camera_pose_frame:
-          Value: false
-        multijackal_03/um7_imu_link:
-          Value: false
-        multijackal_03/velodyne:
           Value: false
         odom:
           Value: false
@@ -153,30 +85,8 @@ Visualization Manager:
         map:
           hololens_01/map:
             hololens_01/odom:
-              {}
-          multijackal_01/map:
-            multijackal_01/odom:
-              multijackal_01/t265_odom_frame:
-                multijackal_01/t265_pose_frame:
-                  multijackal_01/base_footprint:
-                    multijackal_01/base_link:
-                      multijackal_01/t265_link:
-                        multijackal_01/d435i_2_link:
-                          {}
-                        multijackal_01/d435i_link:
-                          {}
-                        multijackal_01/velodyne:
-                          {}
-                    multijackal_01/pointcloud_to_laser_frame:
-                      {}
-          multijackal_03/map:
-            multijackal_03/odom:
-              keyframe:
-                {}
-              multijackal_03/base_link:
-                multijackal_03/um7_imu_link:
-                  {}
-                multijackal_03/velodyne:
+              hololens_01/base_link:
+                HololensRM_pcl:
                   {}
           odom:
             {}
@@ -743,9 +653,7 @@ Visualization Manager:
       Marker Topic: /elastic_map_merge/markers
       Name: MarkerArray
       Namespaces:
-        edges: true
-        loop_close_radius: false
-        nodes: true
+        {}
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -786,20 +694,48 @@ Visualization Manager:
       Channel Name: intensity
       Class: rviz/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: ""
+      Color Transformer: Intensity
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
       Name: PointCloud2
-      Position Transformer: ""
+      Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
       Style: Flat Squares
       Topic: /hl2_rm_pcl_proc
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Min Color: 0; 0; 0
+      Name: "hololens_01: MapPoints"
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.05000000074505806
+      Style: Flat Squares
+      Topic: /hololens_01/hdl_graph_slam/map_points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -832,16 +768,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 29.579938888549805
+      Distance: 18.867694854736328
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 6.93817663192749
-        Y: 2.476893901824951
-        Z: 1.6353782415390015
+        X: -1.3021360635757446
+        Y: -2.482774019241333
+        Z: 1.6269373893737793
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -850,7 +786,7 @@ Visualization Manager:
       Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.1872518062591553
+      Yaw: 3.1772549152374268
     Saved: ~
 Window Geometry:
   Displays:

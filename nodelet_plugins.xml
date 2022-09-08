@@ -13,3 +13,7 @@
 <library path="lib/libhdl_graph_slam_nodelet">
   <class name="hdl_graph_slam/HdlGraphSlamNodelet" type="hdl_graph_slam::HdlGraphSlamNodelet" base_class_type="nodelet::Nodelet" />
 </library>
+
+<library path="lib/libodom_msg_republisher_nodelet">
+  <class name="hdl_graph_slam/OdomRepublisherNodelet" type="hdl_graph_slam::OdomRepublisherNodelet" base_class_type="nodelet::Nodelet" />
+</library>

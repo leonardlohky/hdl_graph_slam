@@ -114,7 +114,6 @@ target_link_libraries(scan_matching_odometry_nodelet
 )
 add_dependencies(scan_matching_odometry_nodelet ${PROJECT_NAME}_gencpp)
 
-
 add_library(hdl_graph_slam_nodelet
   apps/hdl_graph_slam_nodelet.cpp
   src/hdl_graph_slam/graph_slam.cpp
@@ -138,6 +137,13 @@ target_link_libraries(hdl_graph_slam_nodelet
 )
 add_dependencies(hdl_graph_slam_nodelet ${PROJECT_NAME}_gencpp)
 
+add_library(odom_msg_republisher_nodelet apps/odom_msg_republisher_nodelet.cpp)
+target_link_libraries(odom_msg_republisher_nodelet
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+add_dependencies(odom_msg_republisher_nodelet ${PROJECT_NAME}_gencpp)
+
 catkin_install_python(
   PROGRAMS
     src/${PROJECT_NAME}/bag_player.py
@@ -155,6 +161,7 @@ install(TARGETS
   floor_detection_nodelet
   scan_matching_odometry_nodelet 
   hdl_graph_slam_nodelet
+  odom_msg_republisher_nodelet
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
 
 install(DIRECTORY include/
