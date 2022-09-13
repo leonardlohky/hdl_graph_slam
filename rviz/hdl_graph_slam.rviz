@@ -6,11 +6,15 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /TF1
+        - /TF1/Frames1
         - "/jackal_01: odom_t2651/Shape1"
         - "/jackal_01: PathMarkers1/Namespaces1"
         - "/jackal_03: PathMarkers1/Namespaces1"
+        - /MarkerArray1
         - /MarkerArray1/Namespaces1
         - "/hololens_01: MapPoints1"
+        - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 681
   - Class: rviz/Selection
@@ -66,12 +70,6 @@ Visualization Manager:
           Value: true
         hololens_01/base_link:
           Value: true
-        hololens_01/map:
-          Value: false
-        hololens_01/odom:
-          Value: false
-        keyframe:
-          Value: false
         map:
           Value: false
         odom:
@@ -82,13 +80,8 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        map:
-          hololens_01/map:
-            hololens_01/odom:
-              hololens_01/base_link:
-                HololensRM_pcl:
-                  {}
-          odom:
+        hololens_01/base_link:
+          HololensRM_pcl:
             {}
       Update Interval: 0
       Value: true
@@ -740,11 +733,39 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 125; 125; 255
+      Min Color: 125; 125; 255
+      Name: LaserScan
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic: /hololens_scan
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: map
+    Fixed Frame: HololensRM_pcl
     Frame Rate: 30
   Name: root
   Tools:
@@ -768,25 +789,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 18.867694854736328
+      Distance: 8.883257865905762
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -1.3021360635757446
-        Y: -2.482774019241333
-        Z: 1.6269373893737793
+        X: -0.8936196565628052
+        Y: -0.8229252696037292
+        Z: -0.06996620446443558
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5697963237762451
+      Pitch: 1.1647967100143433
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.1772549152374268
+      Yaw: 2.9422454833984375
     Saved: ~
 Window Geometry:
   Displays:
