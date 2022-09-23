@@ -142,6 +142,7 @@ catkin_install_python(
     src/${PROJECT_NAME}/bag_player.py
     src/${PROJECT_NAME}/ford2bag.py
     src/${PROJECT_NAME}/map2odom_publisher.py
+    src/${PROJECT_NAME}/odom_frame_converter.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

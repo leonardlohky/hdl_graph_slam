@@ -201,16 +201,6 @@
     <param name="map_cloud_resolution" value="0.05" />
   </node>
 
-  <!-- odom_msg_republisher_nodelet -->
-  <node pkg="nodelet" type="nodelet" name="odom_msg_republishe_nodelet_01" args="load hdl_graph_slam/OdomRepublisherNodelet $(arg nodelet_manager)">
-    <remap from="/gps/geopoint" to="/holoOdom" />
-    <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
-    <remap from="/filtered_points_conv" to="/$(arg robot_ns)/filtered_points_conv" />
-
-    <param name="target_parent_frame" value="$(arg robot_ns)/odom" />
-    <param name="target_child_frame" value="$(arg robot_ns)/base_link" />
-  </node>
-
   <node pkg="hdl_graph_slam" type="map2odom_publisher.py" name="map2odom_publisher_01">
     <remap from="/tf" to="$(arg tf_topic)" />
     <remap from="/tf_static" to="$(arg tf_static_topic)" />

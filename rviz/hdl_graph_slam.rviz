@@ -5,16 +5,11 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Status1
-        - /TF1
         - /TF1/Frames1
         - "/jackal_01: odom_t2651/Shape1"
         - "/jackal_01: PathMarkers1/Namespaces1"
+        - "/jackal_02: PathMarkers1/Namespaces1"
         - "/jackal_03: PathMarkers1/Namespaces1"
-        - /MarkerArray1
-        - /MarkerArray1/Namespaces1
-        - "/hololens_01: MapPoints1"
-        - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 681
   - Class: rviz/Selection
@@ -35,7 +30,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: PointCloud2
+    SyncSource: "3d_merged_map: PointCloud"
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -66,12 +61,52 @@ Visualization Manager:
       Frame Timeout: 50
       Frames:
         All Enabled: false
-        HololensRM_pcl:
-          Value: true
-        hololens_01/base_link:
-          Value: true
         map:
           Value: false
+        multijackal_01/base_footprint:
+          Value: true
+        multijackal_01/base_link:
+          Value: false
+        multijackal_01/d435i_2_link:
+          Value: false
+        multijackal_01/d435i_link:
+          Value: false
+        multijackal_01/map:
+          Value: false
+        multijackal_01/odom:
+          Value: false
+        multijackal_01/pointcloud_to_laser_frame:
+          Value: false
+        multijackal_01/t265_link:
+          Value: false
+        multijackal_01/t265_odom_frame:
+          Value: false
+        multijackal_01/t265_pose_frame:
+          Value: false
+        multijackal_01/velodyne:
+          Value: false
+        multijackal_02/base_footprint:
+          Value: true
+        multijackal_02/base_link:
+          Value: true
+        multijackal_02/d435i_2_link:
+          Value: true
+        multijackal_02/d435i_link:
+          Value: true
+        multijackal_02/map:
+          Value: false
+        multijackal_02/odom:
+          Value: true
+        multijackal_02/pointcloud_to_laser_frame:
+          Value: true
+        multijackal_02/t265_link:
+          Value: true
+        multijackal_02/t265_odom_frame:
+          Value: true
+        multijackal_02/t265_pose_frame:
+          Value: true
+        multijackal_02/velodyne:
+          Value: true
         odom:
           Value: false
       Marker Scale: 5
@@ -80,8 +115,8 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        hololens_01/base_link:
-          HololensRM_pcl:
+        map:
+          odom:
             {}
       Update Interval: 0
       Value: true
@@ -108,7 +143,35 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.009999999776482582
       Style: Flat Squares
-      Topic: /multijackal_01/velodyne_points
+      Topic: /multijackal_01/modified_velodyne_points
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Min Color: 0; 0; 0
+      Name: "jackal_02: VelodynePoints"
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic: /multijackal_02/modified_velodyne_points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -129,34 +192,6 @@ Visualization Manager:
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
-      Name: "jackal_02: VelodynePoints"
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
-      Topic: /multijackal_02/velodyne_points
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: true
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Min Color: 0; 0; 0
       Name: "jackal_03: VelodynePoints"
       Position Transformer: XYZ
       Queue Size: 10
@@ -168,7 +203,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: false
       Autocompute Value Bounds:
@@ -206,7 +241,7 @@ Visualization Manager:
         Min Value: -10
         Value: true
       Axis: Z
-      Channel Name: intensity
+      Channel Name: z
       Class: rviz/PointCloud2
       Color: 255; 255; 255
       Color Transformer: Intensity
@@ -336,6 +371,40 @@ Visualization Manager:
           Scale: 1
           Value: true
         Value: true
+      Enabled: true
+      Keep: 0
+      Name: "jackal_02: odom_estimate"
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 255; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /multijackal_02/odom_estimate
+      Unreliable: false
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
       Enabled: false
       Keep: 0
       Name: "jackal_01: odom_t265"
@@ -370,6 +439,40 @@ Visualization Manager:
           Scale: 1
           Value: true
         Value: true
+      Enabled: true
+      Keep: 0
+      Name: "jackal_02: odom"
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /multijackal_02/odom
+      Unreliable: false
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
       Enabled: false
       Keep: 0
       Name: "jackal_03: odom"
@@ -387,78 +490,26 @@ Visualization Manager:
       Topic: /multijackal_03/odom
       Unreliable: false
       Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: false
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Min Color: 0; 0; 0
-      Name: PointCloud2
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
-      Topic: /filtered_points
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 59; 0; 255
-      Color Transformer: FlatColor
-      Decay Time: 0
-      Enabled: false
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Min Color: 0; 0; 0
-      Name: PointCloud2
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.15000000596046448
-      Style: Flat Squares
-      Topic: /floor_detection/floor_points
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: false
     - Class: rviz/MarkerArray
-      Enabled: false
+      Enabled: true
       Marker Topic: /multijackal_01/hdl_graph_slam/markers
       Name: "jackal_01: PathMarkers"
       Namespaces:
-        {}
+        edges: true
+        loop_close_radius: false
+        nodes: true
       Queue Size: 100
-      Value: false
+      Value: true
     - Class: rviz/MarkerArray
-      Enabled: false
+      Enabled: true
       Marker Topic: /multijackal_02/hdl_graph_slam/markers
       Name: "jackal_02: PathMarkers"
       Namespaces:
-        {}
+        edges: true
+        loop_close_radius: false
+        nodes: true
       Queue Size: 100
-      Value: false
+      Value: true
     - Class: rviz/MarkerArray
       Enabled: false
       Marker Topic: /multijackal_03/hdl_graph_slam/markers
@@ -470,14 +521,42 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
+        Max Value: 3.5529754161834717
+        Min Value: -1.0970245599746704
         Value: true
       Axis: Z
       Channel Name: intensity
       Class: rviz/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color Transformer: AxisColor
+      Decay Time: 0
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Min Color: 255; 255; 255
+      Name: 3d_merged_map
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.05000000074505806
+      Style: Flat Squares
+      Topic: /elastic_map_merge/merged_map_3d
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 3.612975597381592
+        Min Value: -2.5476765632629395
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: AxisColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -493,19 +572,19 @@ Visualization Manager:
       Topic: /map_merge/map
       Unreliable: false
       Use Fixed Frame: true
-      Use rainbow: false
+      Use rainbow: true
       Value: true
     - Alpha: 0.699999988079071
       Class: octomap_rviz_plugin/OccupancyMap
       Color Scheme: map
       Draw Behind: false
-      Enabled: true
+      Enabled: false
       Max. Octree Depth: 16
       Name: OccupancyMap_2D
       Octomap Binary Topic: /octomap2D
       Unreliable: false
       Use Timestamp: false
-      Value: true
+      Value: false
     - Class: octomap_rviz_plugin/OccupancyGrid
       Enabled: false
       Max. Height Display: 3.4028234663852886e+38
@@ -529,126 +608,6 @@ Visualization Manager:
       Unreliable: false
       Use Timestamp: false
       Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: false
-      Invert Rainbow: false
-      Max Color: 255; 255; 0
-      Min Color: 255; 255; 0
-      Name: PointCloud2
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.05000000074505806
-      Style: Flat Squares
-      Topic: /elastic_map_merge/kf_map
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: false
-      Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: false
-      Invert Rainbow: false
-      Max Color: 255; 0; 0
-      Min Color: 255; 0; 0
-      Name: PointCloud2
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.05000000074505806
-      Style: Flat Squares
-      Topic: /multijackal_01/hdl_graph_slam/local_map
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: false
-      Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: false
-      Invert Rainbow: false
-      Max Color: 0; 0; 255
-      Min Color: 0; 0; 255
-      Name: PointCloud2
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.05000000074505806
-      Style: Flat Squares
-      Topic: /multijackal_03/hdl_graph_slam/local_map
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: false
-      Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: true
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Min Color: 255; 255; 255
-      Name: PointCloud2
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.05000000074505806
-      Style: Flat Squares
-      Topic: /elastic_map_merge/merged_map_3d
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: false
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /elastic_map_merge/markers
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -693,34 +652,6 @@ Visualization Manager:
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
-      Name: PointCloud2
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
-      Topic: /hl2_rm_pcl_proc
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: true
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: true
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Min Color: 0; 0; 0
       Name: "hololens_01: MapPoints"
       Position Transformer: XYZ
       Queue Size: 10
@@ -742,8 +673,8 @@ Visualization Manager:
       Axis: Z
       Channel Name: intensity
       Class: rviz/LaserScan
-      Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color: 255; 0; 255
+      Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -754,18 +685,28 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.009999999776482582
+      Size (m): 0.029999999329447746
       Style: Flat Squares
       Topic: /hololens_scan
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: false
       Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /hololens_01/map
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: HololensRM_pcl
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -789,25 +730,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 8.883257865905762
+      Distance: 17.065387725830078
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.8936196565628052
-        Y: -0.8229252696037292
-        Z: -0.06996620446443558
+        X: 5.280091762542725
+        Y: -1.7303409576416016
+        Z: 0.7706280946731567
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.1647967100143433
+      Pitch: 0.6247972249984741
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.9422454833984375
+      Yaw: 2.4518048763275146
     Saved: ~
 Window Geometry:
   Displays:

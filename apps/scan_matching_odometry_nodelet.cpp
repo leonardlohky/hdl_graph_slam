@@ -280,8 +280,8 @@ private:
 
     odom.pose.pose.position.x = pose(0, 3);
     odom.pose.pose.position.y = pose(1, 3);
-    odom.pose.pose.position.z = 0.0;
-    // odom.pose.pose.position.z = pose(2, 3);
+    // odom.pose.pose.position.z = 0.0;
+    odom.pose.pose.position.z = pose(2, 3);
     odom.pose.pose.orientation = odom_trans.transform.rotation;
 
     odom.child_frame_id = base_frame_id;

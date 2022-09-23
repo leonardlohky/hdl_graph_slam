@@ -29,6 +29,9 @@
   <node pkg="tf" type="static_transform_publisher" name="lidar2base_publisher_02" args="0 0 0 0 0 0 /$(arg robot_ns)/base_link /$(arg robot_ns)/velodyne 10">
     <remap from="/tf" to="$(arg tf_topic)" />
   </node>
+  <!-- <node pkg="tf" type="static_transform_publisher" name="$(arg robot_ns)_t265_link_to_t265_pose_frame_tf_broadcaster_02"  args="0 0 0 0 0 0 /$(arg robot_ns)/t265_pose_frame /$(arg robot_2)/t265_link 10">
+    <remap from="/tf" to="$(arg tf_topic)" />
+  </node> -->
   <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_ns)_tf_broadcaster_02"  args="0 0 0 0 0 0 /map /$(arg robot_ns)/map 10">
     <remap from="/tf" to="$(arg tf_topic)" />
   </node> -->
@@ -65,7 +68,7 @@
   <!-- scan_matching_odometry_nodelet -->
   <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_02" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
-    <remap from="/odom" to="/$(arg robot_ns)/odom" />
+    <remap from="/odom" to="/$(arg robot_ns)/odom_estimate" />
     <remap from="/scan_matching_odometry/read_until" to="/$(arg robot_ns)/scan_matching_odometry/read_until" />
     <remap from="/scan_matching_odometry/transform" to="/$(arg robot_ns)/scan_matching_odometry/transform" />
     <remap from="/scan_matching_odometry/status" to="/$(arg robot_ns)/scan_matching_odometry/status" />
@@ -113,7 +116,7 @@
   <!-- hdl_graph_slam_nodelet -->
   <node pkg="nodelet" type="nodelet" name="hdl_graph_slam_nodelet_02" args="load hdl_graph_slam/HdlGraphSlamNodelet $(arg nodelet_manager)">
     <!-- remap topics with robot namespace -->
-    <remap from="/odom" to="/$(arg robot_ns)/odom" />
+    <remap from="/odom" to="/$(arg robot_ns)/odom_estimate" />
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/floor_detection/floor_coeffs" to="/$(arg robot_ns)/floor_detection/floor_coeffs" />
     <remap from="/hdl_graph_slam/map_points" to="/$(arg robot_ns)/hdl_graph_slam/map_points" />
