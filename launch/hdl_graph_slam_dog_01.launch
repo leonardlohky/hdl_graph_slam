@@ -8,7 +8,7 @@
   <arg name="nodelet_manager" default="velodyne_nodelet_manager_01" />
   <arg name="enable_floor_detection" default="false" />
   <arg name="enable_gps" default="false" />
-  <arg name="enable_imu_acc" default="false" />
+  <arg name="enable_imu_acc" default="true" />
   <arg name="enable_imu_ori" default="false" />
 
   <arg name="points_topic" default="/$(arg robot_ns)/modified_velodyne_points" />
@@ -62,7 +62,7 @@
   </node>
 
   <!-- scan_matching_odometry_nodelet -->
-  <!-- <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_01" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
+  <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_01" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/odom" to="/$(arg robot_ns)/odom_estimate" />
     <remap from="/scan_matching_odometry/read_until" to="/$(arg robot_ns)/scan_matching_odometry/read_until" />
@@ -92,7 +92,7 @@
     <param name="reg_correspondence_randomness" value="20"/>
     <param name="reg_resolution" value="1.0" />
     <param name="reg_nn_search_method" value="DIRECT7" />
-  </node> -->
+  </node>
 
   <!-- floor_detection_nodelet -->
   <node pkg="nodelet" type="nodelet" name="floor_detection_nodelet_01" args="load hdl_graph_slam/FloorDetectionNodelet $(arg nodelet_manager)" if="$(arg enable_floor_detection)">
@@ -112,7 +112,7 @@
   <!-- hdl_graph_slam_nodelet -->
   <node pkg="nodelet" type="nodelet" name="hdl_graph_slam_nodelet_01" args="load hdl_graph_slam/HdlGraphSlamNodelet $(arg nodelet_manager)">
     <!-- remap topics with robot namespace -->
-    <remap from="/odom" to="/$(arg robot_ns)/odom" />
+    <remap from="/odom" to="/$(arg robot_ns)/odom_estimate" />
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/floor_detection/floor_coeffs" to="/$(arg robot_ns)/floor_detection/floor_coeffs" />
     <remap from="/hdl_graph_slam/map_points" to="/$(arg robot_ns)/hdl_graph_slam/map_points" />
@@ -123,6 +123,7 @@
     <remap from="/hdl_graph_slam/dump" to="/hdl_graph_slam_nodelet_01/dump" />
     <remap from="/hdl_graph_slam/save_map" to="/hdl_graph_slam_nodelet_01/save_map" />
     <remap from="/hdl_graph_slam/publish_map_to_dummy" to="/hdl_graph_slam_nodelet_01/publish_map_to_dummy" />
+    <remap from="/gpsimu_driver/imu_data" to="/$(arg robot_ns)/d435i/imu" />
 
     <param name="robot_ns" value="$(arg robot_ns)" />
     <param name="points_topic" value="$(arg points_topic)" />
@@ -133,8 +134,8 @@
     <param name="publish_kfs" value="true" />
     <!-- optimization params -->
     <!-- typical solvers: gn_var, gn_fix6_3, gn_var_cholmod, lm_var, lm_fix6_3, lm_var_cholmod, ... -->
-    <param name="g2o_solver_type" value="lm_var" />
-    <param name="g2o_solver_num_iterations" value="16" />
+    <param name="g2o_solver_type" value="lm_var_cholmod" />
+    <param name="g2o_solver_num_iterations" value="512" />
     <!-- constraint switches -->
     <param name="enable_gps" value="$(arg enable_gps)" />
     <param name="enable_imu_acceleration" value="$(arg enable_imu_acc)" />
@@ -149,10 +150,10 @@
     <param name="fix_first_node_adaptive" value="true"/>
     <!-- loop closure params -->
     <param name="distance_thresh" value="10.0" />
-    <param name="height_distance_thresh" value="0.5" />
+    <param name="height_distance_thresh" value="0.2" />
     <param name="accum_distance_thresh" value="15.0" />
     <param name="min_edge_interval" value="5.0" />
-    <param name="fitness_score_thresh" value="0.7" />
+    <param name="fitness_score_thresh" value="0.5" />
     <!-- scan matching params -->
     <param name="registration_method" value="FAST_VGICP" />
     <param name="reg_num_threads" value="0" />

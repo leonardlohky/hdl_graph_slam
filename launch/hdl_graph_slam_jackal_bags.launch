@@ -14,13 +14,13 @@
   <rosparam>use_sim_time: true</rosparam>
 
   <!-- map to robot_map tf publishers -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="map_to_$(arg robot_1)_map_tf_broadcaster_01"  args="0 0 0 0 0 0 /map /$(arg robot_1)/map 10">
+  <node pkg="tf" type="static_transform_publisher" name="map_to_$(arg robot_1)_map_tf_broadcaster_01"  args="0 0 0 0 0 0 /map /$(arg robot_1)/map 10">
     <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
+  </node>
 
-  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_2)_tf_broadcaster_02"  args="0 0 0 0 0 0 /map /$(arg robot_2)/map 10">
+  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_2)_tf_broadcaster_02"  args="0 0 0 0 0 0 /map /$(arg robot_2)/map 10">
     <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
+  </node>
 
   <!-- <node pkg="tf" type="static_transform_publisher" name="map_to_$(arg robot_3)_map_tf_broadcaster_03"  args="0 0 0 0 0 0 /map /$(arg robot_3)/map 10">
     <remap from="/tf" to="$(arg tf_topic)" />
@@ -34,13 +34,13 @@
   </node> -->
 
   <!-- Bag file and player for Jackals-->
-  <arg name="bag_file1" value="$(env HOME)/bags/dog_project/dog/dog_01/multijackal_01_explore_down_explore_noMap_tfProc.bag"/>
-  <arg name="bag_file2" value="$(env HOME)/bags/dog_project/dog/dog_02/multijackal_02_explore_down_explore_noMap_tfProc.bag"/>
-  <!-- <arg name="bag_file3" value="$(env HOME)/.segmap/rrt/nuc_03/2021-09-30-16-30-57.bag"/> -->
+  <arg name="bag_file_1" value="$(env HOME)/bags/dog_project/dog/dog_01/multijackal_01.bag"/>
+  <arg name="bag_file_2" value="$(env HOME)/bags/dog_project/dog/dog_02/multijackal_02_explore_down_explore_noMap_tfProc.bag"/>
+  <!-- <arg name="bag_file_3" value="$(env HOME)/.segmap/rrt/nuc_03/2021-09-30-16-30-57.bag"/> -->
   <arg name="bag_file_hololens" value="$(env HOME)/bags/dog_project/hololens/hololens_run_1.bag"/>
   <arg name="bag_file_merged" value="$(env HOME)/bags/dog_project/merged/multidogs_down_explore_up_explore_noMap_tfProc.bag"/>
 
-  <node name="player1" pkg="rosbag" type="play" output="screen" args=" --clock  $(arg bag_file_merged)"/>
+  <node name="player1" pkg="rosbag" type="play" output="screen" args=" --clock  $(arg bag_file_1)"/>
 
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find hdl_graph_slam)/rviz/hdl_graph_slam.rviz">
     <remap from="/tf" to="$(arg tf_topic)" />

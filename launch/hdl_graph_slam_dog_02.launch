@@ -112,7 +112,7 @@
   <!-- hdl_graph_slam_nodelet -->
   <node pkg="nodelet" type="nodelet" name="hdl_graph_slam_nodelet_02" args="load hdl_graph_slam/HdlGraphSlamNodelet $(arg nodelet_manager)">
     <!-- remap topics with robot namespace -->
-    <remap from="/odom" to="/$(arg robot_ns)/odom_fixed" />
+    <remap from="/odom" to="/$(arg robot_ns)/odom" />
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/floor_detection/floor_coeffs" to="/$(arg robot_ns)/floor_detection/floor_coeffs" />
     <remap from="/hdl_graph_slam/map_points" to="/$(arg robot_ns)/hdl_graph_slam/map_points" />
@@ -204,7 +204,7 @@
     <remap from="/hdl_graph_slam/odom2pub" to="/$(arg robot_ns)/hdl_graph_slam/odom2pub" />
   </node>
 
-  <node pkg="hdl_graph_slam" type="odom_frame_converter.py" name="odom_frame_converter_02">
-  </node>
+  <!-- <node pkg="hdl_graph_slam" type="odom_frame_converter.py" name="odom_frame_converter_02">
+  </node> -->
 
 </launch>
