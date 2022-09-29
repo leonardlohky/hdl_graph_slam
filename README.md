@@ -7,6 +7,11 @@
 
 [![Build](https://github.com/koide3/hdl_graph_slam/actions/workflows/build.yml/badge.svg)](https://github.com/koide3/hdl_graph_slam/actions/workflows/build.yml) on melodic & noetic
 
+## Changes from the original
+This is a modified version of the original [hdl_graph_slam](https://github.com/leonardlohky/hdl_graph_slam) package by koide3. Changes include the ability to transmit the stored keyframes as a rostopic message. This can be toggled on/off through the `publish_kfs` param in the launch file.
+
+Other change include the addition of a parameter `height_distance_threshold`, which sieves out loop closure candidates that are too far apart from each other in terms of z-height. This lowers the risk of a incorrect loop closure detection between the current keyframe and stored keyframes that are on different levels in a multi-story environment.
+
 ## Nodelets
 ***hdl_graph_slam*** consists of four nodelets.
 

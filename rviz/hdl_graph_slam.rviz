@@ -5,7 +5,9 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /TF1/Frames1
         - "/jackal_01: odom_t2651/Shape1"
+        - "/map_merge: PathMarkers1/Namespaces1"
         - "/jackal_01: PathMarkers1/Namespaces1"
         - "/jackal_02: PathMarkers1/Namespaces1"
         - "/jackal_03: PathMarkers1/Namespaces1"
@@ -60,12 +62,18 @@ Visualization Manager:
       Frame Timeout: 50
       Frames:
         All Enabled: false
+        keyframe:
+          Value: false
         map:
           Value: false
         multijackal_01/base_footprint:
           Value: false
         multijackal_01/base_link:
           Value: true
+        multijackal_01/d435i_2_accel_frame:
+          Value: false
+        multijackal_01/d435i_2_accel_optical_frame:
+          Value: false
         multijackal_01/d435i_2_aligned_depth_to_color_frame:
           Value: false
         multijackal_01/d435i_2_color_frame:
@@ -76,7 +84,29 @@ Visualization Manager:
           Value: false
         multijackal_01/d435i_2_depth_optical_frame:
           Value: false
+        multijackal_01/d435i_2_gyro_frame:
+          Value: false
+        multijackal_01/d435i_2_imu_optical_frame:
+          Value: false
         multijackal_01/d435i_2_link:
+          Value: false
+        multijackal_01/d435i_accel_frame:
+          Value: false
+        multijackal_01/d435i_accel_optical_frame:
+          Value: false
+        multijackal_01/d435i_aligned_depth_to_color_frame:
+          Value: false
+        multijackal_01/d435i_color_frame:
+          Value: false
+        multijackal_01/d435i_color_optical_frame:
+          Value: false
+        multijackal_01/d435i_depth_frame:
+          Value: false
+        multijackal_01/d435i_depth_optical_frame:
+          Value: false
+        multijackal_01/d435i_gyro_frame:
+          Value: false
+        multijackal_01/d435i_imu_optical_frame:
           Value: false
         multijackal_01/d435i_link:
           Value: false
@@ -105,8 +135,30 @@ Visualization Manager:
         multijackal_02/base_footprint:
           Value: false
         multijackal_02/base_link:
-          Value: true
+          Value: false
+        multijackal_02/d435i_2_accel_frame:
+          Value: false
+        multijackal_02/d435i_2_accel_optical_frame:
+          Value: false
+        multijackal_02/d435i_2_aligned_depth_to_color_frame:
+          Value: false
+        multijackal_02/d435i_2_color_frame:
+          Value: false
+        multijackal_02/d435i_2_color_optical_frame:
+          Value: false
+        multijackal_02/d435i_2_depth_frame:
+          Value: false
+        multijackal_02/d435i_2_depth_optical_frame:
+          Value: false
+        multijackal_02/d435i_2_gyro_frame:
+          Value: false
+        multijackal_02/d435i_2_imu_optical_frame:
+          Value: false
         multijackal_02/d435i_2_link:
+          Value: false
+        multijackal_02/d435i_accel_frame:
+          Value: false
+        multijackal_02/d435i_accel_optical_frame:
           Value: false
         multijackal_02/d435i_aligned_depth_to_color_frame:
           Value: false
@@ -117,6 +169,10 @@ Visualization Manager:
         multijackal_02/d435i_depth_frame:
           Value: false
         multijackal_02/d435i_depth_optical_frame:
+          Value: false
+        multijackal_02/d435i_gyro_frame:
+          Value: false
+        multijackal_02/d435i_imu_optical_frame:
           Value: false
         multijackal_02/d435i_link:
           Value: false
@@ -153,35 +209,63 @@ Visualization Manager:
         map:
           multijackal_01/map:
             multijackal_01/odom:
+              keyframe:
+                {}
               multijackal_01/t265_odom_frame:
                 multijackal_01/t265_pose_frame:
                   multijackal_01/base_footprint:
                     multijackal_01/base_link:
-                      multijackal_01/t265_link:
-                        multijackal_01/d435i_2_link:
-                          multijackal_01/d435i_2_aligned_depth_to_color_frame:
-                            multijackal_01/d435i_2_color_optical_frame:
-                              {}
-                          multijackal_01/d435i_2_color_frame:
-                            {}
-                          multijackal_01/d435i_2_depth_frame:
-                            multijackal_01/d435i_2_depth_optical_frame:
-                              {}
-                        multijackal_01/d435i_link:
-                          {}
-                        multijackal_01/t265_fisheye1_frame:
-                          multijackal_01/t265_fisheye1_optical_frame:
-                            {}
-                        multijackal_01/t265_fisheye2_frame:
-                          multijackal_01/t265_fisheye2_optical_frame:
-                            {}
-                        multijackal_01/velodyne:
-                          {}
+                      {}
                     multijackal_01/pointcloud_to_laser_frame:
+                      {}
+                  multijackal_01/t265_link:
+                    multijackal_01/d435i_2_link:
+                      multijackal_01/d435i_2_accel_frame:
+                        multijackal_01/d435i_2_accel_optical_frame:
+                          {}
+                      multijackal_01/d435i_2_aligned_depth_to_color_frame:
+                        multijackal_01/d435i_2_color_optical_frame:
+                          {}
+                      multijackal_01/d435i_2_color_frame:
+                        {}
+                      multijackal_01/d435i_2_depth_frame:
+                        multijackal_01/d435i_2_depth_optical_frame:
+                          {}
+                      multijackal_01/d435i_2_gyro_frame:
+                        multijackal_01/d435i_2_imu_optical_frame:
+                          {}
+                    multijackal_01/d435i_link:
+                      multijackal_01/d435i_accel_frame:
+                        multijackal_01/d435i_accel_optical_frame:
+                          {}
+                      multijackal_01/d435i_aligned_depth_to_color_frame:
+                        multijackal_01/d435i_color_optical_frame:
+                          {}
+                      multijackal_01/d435i_color_frame:
+                        {}
+                      multijackal_01/d435i_depth_frame:
+                        multijackal_01/d435i_depth_optical_frame:
+                          {}
+                      multijackal_01/d435i_gyro_frame:
+                        multijackal_01/d435i_imu_optical_frame:
+                          {}
+                    multijackal_01/t265_fisheye1_frame:
+                      multijackal_01/t265_fisheye1_optical_frame:
+                        {}
+                    multijackal_01/t265_fisheye2_frame:
+                      multijackal_01/t265_fisheye2_optical_frame:
+                        {}
+                    multijackal_01/velodyne:
                       {}
           multijackal_02/map:
             multijackal_02/odom:
-              {}
+              multijackal_02/t265_link:
+                multijackal_02/t265_fisheye1_frame:
+                  multijackal_02/t265_fisheye1_optical_frame:
+                    {}
+                multijackal_02/t265_fisheye2_frame:
+                  multijackal_02/t265_fisheye2_optical_frame:
+                    {}
           odom:
             {}
       Update Interval: 0
@@ -282,7 +366,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: Intensity
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 0; 0
       Max Intensity: 2
@@ -299,7 +383,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: false
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -437,7 +521,7 @@ Visualization Manager:
           Scale: 1
           Value: true
         Value: true
-      Enabled: true
+      Enabled: false
       Keep: 0
       Name: "jackal_02: odom_estimate"
       Position Tolerance: 0.10000000149011612
@@ -453,7 +537,7 @@ Visualization Manager:
         Value: Arrow
       Topic: /multijackal_02/odom_estimate
       Unreliable: false
-      Value: true
+      Value: false
     - Angle Tolerance: 0.10000000149011612
       Class: rviz/Odometry
       Covariance:
@@ -505,7 +589,7 @@ Visualization Manager:
           Scale: 1
           Value: true
         Value: true
-      Enabled: true
+      Enabled: false
       Keep: 0
       Name: "jackal_02: odom"
       Position Tolerance: 0.10000000149011612
@@ -521,7 +605,7 @@ Visualization Manager:
         Value: Arrow
       Topic: /multijackal_02/odom
       Unreliable: false
-      Value: true
+      Value: false
     - Angle Tolerance: 0.10000000149011612
       Class: rviz/Odometry
       Covariance:
@@ -558,24 +642,29 @@ Visualization Manager:
       Value: false
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /multijackal_01/hdl_graph_slam/markers
-      Name: "jackal_01: PathMarkers"
+      Marker Topic: /elastic_map_merge/markers
+      Name: "map_merge: PathMarkers"
       Namespaces:
-        edges: true
         loop_close_radius: false
         nodes: true
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
-      Enabled: true
+      Enabled: false
+      Marker Topic: /multijackal_01/hdl_graph_slam/markers
+      Name: "jackal_01: PathMarkers"
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: false
+    - Class: rviz/MarkerArray
+      Enabled: false
       Marker Topic: /multijackal_02/hdl_graph_slam/markers
       Name: "jackal_02: PathMarkers"
       Namespaces:
-        edges: true
-        loop_close_radius: false
-        nodes: true
+        {}
       Queue Size: 100
-      Value: true
+      Value: false
     - Class: rviz/MarkerArray
       Enabled: false
       Marker Topic: /multijackal_03/hdl_graph_slam/markers
@@ -587,36 +676,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 3.5529754161834717
-        Min Value: -1.0970245599746704
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: AxisColor
-      Decay Time: 0
-      Enabled: false
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Min Color: 255; 255; 255
-      Name: 3d_merged_map
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.05000000074505806
-      Style: Flat Squares
-      Topic: /elastic_map_merge/merged_map_3d
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 3.612975597381592
-        Min Value: -2.5476765632629395
+        Max Value: 2.07375168800354
+        Min Value: -0.7062482237815857
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -628,14 +689,14 @@ Visualization Manager:
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 255; 255; 255
-      Name: "3d_merged_map: PointCloud"
+      Name: 3d_merged_map
       Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.05000000074505806
       Style: Flat Squares
-      Topic: /map_merge/map
+      Topic: /elastic_map_merge/merged_map_3d
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -796,16 +857,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 15.871562004089355
+      Distance: 20.384567260742188
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.11459571123123169
-        Y: -2.31003999710083
-        Z: 0.7654383778572083
+        X: 3.6167643070220947
+        Y: 1.7218904495239258
+        Z: -0.7901936769485474
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -814,7 +875,7 @@ Visualization Manager:
       Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.2168080806732178
+      Yaw: 3.1468002796173096
     Saved: ~
 Window Geometry:
   Displays:

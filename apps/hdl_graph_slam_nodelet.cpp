@@ -140,7 +140,7 @@ public:
     keyframes_pub = mt_nh.advertise<Keyframes_Graph>("/hdl_graph_slam/keyframes", 1, true);
     read_until_pub = mt_nh.advertise<std_msgs::Header>("/hdl_graph_slam/read_until", 32);
     publish_to_dummy = false;
-    publish_keyframes_graph = true;
+    publish_keyframes = private_nh.param<bool>("publish_keyframes", true);
 
     dump_service_server = mt_nh.advertiseService("/hdl_graph_slam/dump", &HdlGraphSlamNodelet::dump_service, this);
     save_map_service_server = mt_nh.advertiseService("/hdl_graph_slam/save_map", &HdlGraphSlamNodelet::save_map_service, this);
@@ -632,7 +632,7 @@ private:
       markers_pub.publish(markers);
     }
 
-    if(publish_keyframes_graph) {
+    if(publish_keyframes) {
       Keyframes_Graph keyframes_graph_msg;
       auto kf_graph_msg = create_keyframes_graph_msg(keyframes);
 
@@ -1020,7 +1020,7 @@ private:
   ros::Publisher map_points_dummy_pub;
   ros::Publisher keyframes_pub;
   bool publish_to_dummy;
-  bool publish_keyframes_graph;
+  bool publish_keyframes;
 
   tf::TransformListener tf_listener;
 
