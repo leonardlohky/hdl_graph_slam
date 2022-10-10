@@ -6,12 +6,14 @@
 
   <!-- arguments -->
   <arg name="nodelet_manager" default="velodyne_nodelet_manager_01" />
+  <arg name="enable_imu_frontend" default="true" />
   <arg name="enable_floor_detection" default="false" />
   <arg name="enable_gps" default="false" />
   <arg name="enable_imu_acc" default="false" />
   <arg name="enable_imu_ori" default="false" />
-
   <arg name="points_topic" default="/$(arg robot_ns)/modified_velodyne_points" />
+  <arg name="imu_topic" default="/$(arg robot_ns)/d435i/imu" />
+
   <arg name="map_frame_id" default="$(arg robot_ns)/map" />
   <arg name="lidar_odom_frame_id" default="$(arg robot_ns)/odom" />
   <arg name="tf_topic" default="/tf" />
@@ -39,11 +41,25 @@
     <remap from="/tf_static" to="$(arg tf_static_topic)" />
   </node>
 
+  <!-- IMU fusion -->
+  <node name="msf_lidar_scan_matching" pkg="msf_updates" type="pose_sensor" clear_params="true" output="screen">
+    <remap from="msf_core/hl_state_input" to="/fcu/ekf_state_out" />
+    <remap from="msf_core/correction" to="/fcu/ekf_state_in" />
+    <remap from="msf_core/imu_state_input" to="$(arg imu_topic)" />
+    <remap from="msf_updates/transform_input" to="/scan_matching_odometry/transform" />
+
+    <rosparam file="$(find hdl_graph_slam)/launch/msf_config.yaml"/>
+  </node>
+
+  <node pkg="rosservice" type="rosservice" name="initialize" args="call --wait /msf_lidar_scan_matching/pose_sensor/initialize_msf_scale 1"/>
+
   <!-- prefiltering_nodelet -->
   <node pkg="nodelet" type="nodelet" name="prefiltering_nodelet_01" args="load hdl_graph_slam/PrefilteringNodelet $(arg nodelet_manager)">
     <!-- remap topics with robot namespace -->
     <remap from="/velodyne_points" to="$(arg points_topic)" />
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
+    <param name="deskewing" value="$(arg enable_imu_frontend)" />
+    <param name="scan_period" value="0.1" />
     <!-- in case base_link_frame is blank, mapping will be performed in the lidar frame -->
     <param name="base_link_frame" value="$(arg robot_ns)/t265_link" />
     <!-- distance filter -->
@@ -63,6 +79,7 @@
 
   <!-- scan_matching_odometry_nodelet -->
   <node pkg="nodelet" type="nodelet" name="scan_matching_odometry_nodelet_01" args="load hdl_graph_slam/ScanMatchingOdometryNodelet $(arg nodelet_manager)">
+    <param name="enable_imu_frontend" value="$(arg enable_imu_frontend)" />
     <remap from="/filtered_points" to="/$(arg robot_ns)/filtered_points" />
     <remap from="/odom" to="/$(arg robot_ns)/odom_estimate" />
     <remap from="/scan_matching_odometry/read_until" to="/$(arg robot_ns)/scan_matching_odometry/read_until" />
@@ -82,6 +99,7 @@
     <param name="max_acceptable_angle" value="1.0" />
     <param name="downsample_method" value="NONE" />
     <param name="downsample_resolution" value="0.1" />
+    <!-- ICP, GICP, NDT, GICP_OMP, or NDT_OMP(recommended) -->
     <param name="registration_method" value="FAST_VGICP" />
     <param name="reg_num_threads" value="0" />
     <param name="reg_transformation_epsilon" value="0.01"/>

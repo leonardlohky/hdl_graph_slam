@@ -14,9 +14,9 @@
   <rosparam>use_sim_time: true</rosparam>
 
   <!-- map to robot_map tf publishers -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="map_to_$(arg robot_1)_map_tf_broadcaster_01"  args="0 0 0 0 0 0 /map /$(arg robot_1)/map 10">
+  <node pkg="tf" type="static_transform_publisher" name="map_to_$(arg robot_1)_map_tf_broadcaster_01"  args="0 0 0 0 0 0 /map /$(arg robot_1)/map 10">
     <remap from="/tf" to="$(arg tf_topic)" />
-  </node> -->
+  </node>
 
   <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_2)_tf_broadcaster_02"  args="0 0 0 0 0 0 /map /$(arg robot_2)/map 10">
     <remap from="/tf" to="$(arg tf_topic)" />

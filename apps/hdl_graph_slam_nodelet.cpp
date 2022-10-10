@@ -36,13 +36,6 @@
 #include <hdl_graph_slam/FloorCoeffs.h>
 #include <hdl_graph_slam/KF.h>
 #include <hdl_graph_slam/Keyframes_Graph.h>
-#include <hdl_graph_slam/Vertex_SE3.h>
-#include <hdl_graph_slam/Vertex_Plane.h>
-#include <hdl_graph_slam/Vertex_PointXYZ.h>
-#include <hdl_graph_slam/Edge_SE3.h>
-#include <hdl_graph_slam/Edge_SE3_Plane.h>
-#include <hdl_graph_slam/Edge_SE3_PointXYZ.h>
-#include <hdl_graph_slam/g2oGraph.h>
 
 #include <hdl_graph_slam/SaveMap.h>
 #include <hdl_graph_slam/DumpGraph.h>
